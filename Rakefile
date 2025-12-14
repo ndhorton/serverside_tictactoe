@@ -2,11 +2,11 @@
 
 require 'rake/testtask'
 
-task default: %w[wwwttt]
+task default: %w[ttt]
 
-desc 'Run Web-based Tic Tac Toe (default)'
-task :wwwttt do
-  ruby 'wwwttt.rb'
+desc 'Run Tic Tac Toe (default)'
+task :ttt do
+  ruby 'ttt.rb'
 end
 
 desc 'Run tests'
