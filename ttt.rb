@@ -7,11 +7,13 @@ require 'sinatra/reloader' if development?
 require 'tilt/erubi'
 require 'yaml'
 
+require_relative 'lib/tttgame'
+
 configure do
   enable :sessions
   set :session_secret, SecureRandom.hex(64)
 end
 
 get '/' do
-  '<html><h1>Tic Tac Toe</h1></html>'
+  session[:game] = TTTGame.new if session[:game].nil?
 end

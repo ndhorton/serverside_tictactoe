@@ -42,6 +42,25 @@ TTTGame class.
 like TTTGame#player_move(square_index). Then we redirect to `/`
 * `get '/player_won'`: redraw the board with a winning message.
 
+An important thing I had not considered:
+When serializing and deserializing objects, as we need to in order to
+store objects in the session, it is highly advisable to serialize and
+store only standard Ruby classes. Storing objects of custom classes in
+the session is fraught with both security and runtime problems (though
+it is possible in theory). It is considered good practice in web
+development to store e.g. an Array containing the board state in the
+session, and then, on the next request, to re-instantiate a new Board
+object from the retrieved Array.
+
+So, we need not only to redesign the UI of the Tic Tac Toe game from
+RB120, but also to redesign the Board, Player, etc classes.
+
+It would be best simply to harvest the existing classes for methods,
+and build the overall design from scratch. This may be relatively
+simple, however. Most of the Board etc classes can still be used, but
+they must be able to be instantiated from standard Ruby data structures
+like Arrays and Hashes, containing the state of a mid-game board.
+
 TTTGame class
 -new_game
 -player_move(square) -- presumably triggers next computer move
@@ -51,8 +70,31 @@ TTTGame class
 -draw?
 -end_state?
 
-The first thing to do is to design the main board view.
-We need 
+So I think it is best to begin with the design of the routes and views.
+In doing so, we need to think about what persistent state needs to be
+serialized between request-response cycles.
+
+For the most simple design to build upon we need to keep track of:
+* the state of the board's squares
+* whose turn it is? (or is this implicit in the request-response cycle?)
+* whose marker is which
+
+We could have a method called like `game = deserialize(session[:state])` which
+goes through the `session[:state]` Hash and replaces the standard Ruby objects
+tracking state with the custom class objects that contain the behaviour
+and organize the state. We would then have a method that works in an inverse
+way, called like `session[:state] = serialize(game)`.
+
+E.g., the session hash might look something like:
+```
+{
+    board: [[' ', ' ', ' '], [' ', 'X', ' '], ['O', ' ', ' ']],
+    human_marker: 'X',
+    computer_marker: 'O',
+    ...
+}
+```
+
 
 Bonus Features:
 * player logins with passwords
