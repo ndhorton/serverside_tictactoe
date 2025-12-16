@@ -4,23 +4,33 @@ require_relative 'board'
 require_relative 'square'
 require_relative 'player'
 
-# receive request
-# New game, new board
-board = Board.new('X', 'O', :human)
-hal = Hal.new
+# Game logic helper methods
+module TTTGame
+  class << self
+    def deserialize_board(game_state)
+      human_marker = game_state[:human_marker]
+      active_turn = game_state[:active_turn]
+      board_state = game_state[:board_state]
+      Board.new(human_marker, active_turn, board_state)
+    end
 
-# player moves
-board[5] = 'X'
-# computer moves
-computer_choice = hal.choose(board)
-board[computer_choice] = 'O'
+    def deserialize_opponent(game_state)
+      case game_state[:opponent]
+      when 'R2D2'   then R2D2.new
+      when 'Sonny'  then Sonny.new
+      when 'Hal'    then Hal.new
+      end
+    end
 
-# serialize board
-board_state = board.dump_board_state
-
-# store board_state and other parameters in session
-# generate response
-# receive request
-
-new_board = Board.new('X', 'O', :computer, board_state)
-p new_board.dump_board_state
+    def new_game(human_marker = 'X', active_turn = :human, opponent = 'Hal')
+      computer_marker = (human_marker == 'X' ? 'O' : 'X')
+      {
+        board_state: Board.new(human_marker, active_turn).dump_board_state,
+        human_marker: human_marker,
+        computer_marker: computer_marker,
+        active_turn: active_turn,
+        opponent: opponent
+      }
+    end
+  end
+end

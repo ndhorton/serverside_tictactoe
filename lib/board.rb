@@ -14,13 +14,12 @@ class Board
   # We need to modify this such that we can instantiate a Board from
   # an existing board state
   def initialize(human_marker,
-                 computer_marker,
                  active_turn,
                  board_state = nil)
     @initial_marker = Square::INITIAL_MARKER
     @squares = {}
     @human_marker = human_marker
-    @computer_marker = computer_marker
+    @computer_marker = (human_marker == 'X' ? 'O' : 'X')
     @active_turn = active_turn
     reset_squares(board_state)
   end

@@ -1,0 +1,25 @@
+html,
+body {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+table {
+    table-layout: fixed;
+    width: 50%;
+    margin: 10px auto;
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid black;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+.square {
+    display: block;
+    padding: 40px;
+    text-decoration: none;
+    color: black;
+}
