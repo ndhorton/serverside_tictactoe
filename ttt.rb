@@ -25,7 +25,7 @@ get '/' do
 end
 
 get '/game/new' do
-  @game_state = TTTGame.new_game
+  @game_state = TTTGame.new_game('X', :human, 'Sonny')
   session[:game_state] = @game_state
   erb :player_chooses
 end

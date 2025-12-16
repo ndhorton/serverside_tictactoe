@@ -6,6 +6,39 @@ class Player
   attr_accessor :marker
 end
 
+# R2D2 is the easy difficulty player. He picks at random.
+class R2D2 < Player
+  # rubocop:disable Lint/MissingSuper
+  def initialize
+    @name = 'R2D2'
+  end
+  # rubocop:enable Lint/MissingSuper
+
+  def choose(board)
+    board.empty_squares.sample
+  end
+end
+
+# Sonny is the medium difficulty player. He has basic, immediate-opportunity AI.
+class Sonny < Player
+  # rubocop:disable Lint/MissingSuper
+  def initialize
+    @name = 'Sonny'
+  end
+  # rubocop:enable Lint/MissingSuper
+
+  def choose(board)
+    immediate_win = board.open_square(board.computer_marker)
+    immediate_threat = board.open_square(board.human_marker)
+    if immediate_win                then immediate_win
+    elsif immediate_threat          then immediate_threat
+    elsif board.middle_square_open? then 5
+    else
+      board.empty_squares.sample
+    end
+  end
+end
+
 # Hal is the hardest computer opponent. Hal uses the minimax algorithm.
 class Hal < Player
   # rubocop:disable Lint/MissingSuper
