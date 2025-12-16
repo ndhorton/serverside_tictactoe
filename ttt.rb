@@ -9,6 +9,10 @@ require 'yaml'
 
 require_relative 'lib/tttgame'
 
+# TODO: add final board state to `/game/over` views
+# * research Sinatra docs to see how to yield to the same end_state.erb sub-template
+# * yield to it from the end state ERB files
+
 configure do
   enable :sessions
   set :session_secret, SecureRandom.hex(64)
@@ -35,11 +39,23 @@ get '/game/over' do
   redirect '/game/new' if @game_state.nil?
   board = TTTGame.deserialize_board(@game_state)
   if board.human_won?
-    erb :human_won
+    erb :layout, layout: false do
+      erb :human_won do
+        erb :end_state
+      end
+    end
   elsif board.computer_won?
-    erb :computer_won
+    erb :layout, layout: false do
+      erb :computer_won do
+        erb :end_state
+      end
+    end
   else
-    erb :tie
+    erb :layout, layout: false do
+      erb :tie do
+        erb :end_state
+      end
+    end
   end
 end
 

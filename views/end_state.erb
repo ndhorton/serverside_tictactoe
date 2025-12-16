@@ -1,0 +1,15 @@
+<table>
+  <tbody>
+    <% @game_state[:board_state].each_slice(3).with_index do |row, r_index| %>
+      <tr>
+        <% (0..2).each do |c_index| %>
+          <td>
+            <div class="square">
+              <%= visible_space(row[c_index]) %>
+            </div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
