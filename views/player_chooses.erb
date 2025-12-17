@@ -1,15 +1,55 @@
 <table>
   <tbody>
-    <% @game_state[:board_state].each_slice(3).with_index do |row, r_index| %>
-      <tr>
-        <% (0..2).each do |c_index| %>
-          <td>
-            <a href="/game/<%= (r_index * 3) + c_index + 1 %>" class="square">
-              <%= visible_space(row[c_index]) %>
-            </a>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
+    <tr>
+      <td>
+        <a href="/game/1" class="square top left">
+          <%= visible_space(@game_state[:board_state][0]) %>
+        </a>
+      </td>
+      <td>
+        <a href="/game/2" class="square top">
+          <%= visible_space(@game_state[:board_state][1]) %>
+        </a>
+      </td>
+      <td>
+        <a href="/game/3" class="square top right">
+          <%= visible_space(@game_state[:board_state][2]) %>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/game/4" class="square left">
+          <%= visible_space(@game_state[:board_state][3]) %>
+        </a>
+      </td>
+      <td>
+        <a href="/game/5" class="square">
+          <%= visible_space(@game_state[:board_state][4]) %>
+        </a>
+      </td>
+      <td>
+        <a href="/game/6" class="square right">
+          <%= visible_space(@game_state[:board_state][5]) %>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/game/7" class="square bottom left">
+          <%= visible_space(@game_state[:board_state][6]) %>
+        </a>
+      </td>
+      <td>
+        <a href="/game/8" class="square bottom">
+          <%= visible_space(@game_state[:board_state][7]) %>
+        </a>
+      </td>
+      <td>
+        <a href="/game/9" class="square bottom right">
+          <%= visible_space(@game_state[:board_state][8]) %>
+        </a>
+      </td>
+    </tr>
   </tbody>
 </table>

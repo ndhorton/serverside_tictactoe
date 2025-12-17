@@ -1,15 +1,55 @@
 <table>
   <tbody>
-    <% @game_state[:board_state].each_slice(3).with_index do |row, r_index| %>
-      <tr>
-        <% (0..2).each do |c_index| %>
-          <td>
-            <div class="square">
-              <%= visible_space(row[c_index]) %>
-            </div>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
+    <tr>
+      <td>
+        <div class="square top left">
+          <%= visible_space(@game_state[:board_state][0]) %>
+        </div>
+      </td>
+      <td>
+        <div class="square top">
+          <%= visible_space(@game_state[:board_state][1]) %>
+        </div>
+      </td>
+      <td>
+        <div class="square top right">
+          <%= visible_space(@game_state[:board_state][2]) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="square left">
+          <%= visible_space(@game_state[:board_state][3]) %>
+        </div>
+      </td>
+      <td>
+        <div class="square">
+          <%= visible_space(@game_state[:board_state][4]) %>
+        </div>
+      </td>
+      <td>
+        <div class="square right">
+          <%= visible_space(@game_state[:board_state][5]) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="square bottom left">
+          <%= visible_space(@game_state[:board_state][6]) %>
+        </div>
+      </td>
+      <td>
+        <div class="square bottom">
+          <%= visible_space(@game_state[:board_state][7]) %>
+        </div>
+      </td>
+      <td>
+        <div class="square bottom right">
+          <%= visible_space(@game_state[:board_state][8]) %>
+        </div>
+      </td>
+    </tr>
   </tbody>
 </table>

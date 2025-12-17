@@ -16,7 +16,6 @@ table {
 }
 
 td {
-    border: 1px solid black;
     width: 2.5rem;
     height: 2.5rem;
     text-align: center;
@@ -32,4 +31,20 @@ td {
 h2 {
     width: 100%;
     text-align: center;
+}
+
+.top {
+    border-bottom: 1px solid black;
+}
+
+.left {
+    border-right: 1px solid black;
+}
+
+.right {
+    border-left: 1px solid black;
+}
+
+.bottom {
+    border-top: 1px solid black;
 }
