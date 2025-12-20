@@ -1,3 +1,4 @@
 <%= yield %>
-<h2>You won!</h2>
-<a href='/'>New Game</a>
+<% content_for :who_won do %>
+  <h2>You won!</h2>
+<% end %>

@@ -7,7 +7,7 @@
 // and we will need to do so both here and on the server. Same goes for the
 // starting player turn
 
-const delayTime = 1000;
+const delayTime = 800;
 
 let isHumanTurn = true;
 let humanMarker = 'X';
@@ -15,7 +15,8 @@ let humanMarker = 'X';
 $( document ).ready(function(){
   $( '.square' ).click(function(event) {
     const $clickedSquare = $(this);
-    if (!isHumanTurn || $clickedSquare.text().trim() !== '') {
+    if (!isHumanTurn || $clickedSquare.text().trim() !== '' ||
+        $clickedSquare.hasClass( 'end-state' )) {
       return;
     }
     isHumanTurn = false;
@@ -48,7 +49,7 @@ $( document ).ready(function(){
       }
 
       let msEllapsed = (new Date()).getTime() - t;
-      let thinkTime = Math.max(0, msEllapsed);
+      let thinkTime = Math.max(0, delayTime - msEllapsed);
 
       // mark the computer opponent's marker after 'thinking time' pause
       setTimeout( function() {

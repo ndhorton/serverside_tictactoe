@@ -3,6 +3,7 @@
 require 'bcrypt'
 require 'securerandom'
 require 'sinatra'
+require 'sinatra/content_for'
 require 'sinatra/reloader' if development?
 require 'tilt/erubi'
 require 'yaml'
