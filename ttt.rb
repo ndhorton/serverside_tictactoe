@@ -92,6 +92,7 @@ post '/game/:human_choice' do
   # human moves
   board[params[:human_choice].to_i] = @game_state[:human_marker]
 
+  # if human move completed the board, we return early 'end'
   if board.end_state?
     @game_state[:board_state] = board.dump_board_state
     session[:game_state] = @game_state
@@ -104,6 +105,7 @@ post '/game/:human_choice' do
   computer_move = @opponent.choose(board)
   board[computer_move] = @game_state[:computer_marker]
 
+  # if computer move completed the board, we return early 'end_after'
   if board.end_state?
     @game_state[:board_state] = board.dump_board_state
     session[:game_state] = @game_state

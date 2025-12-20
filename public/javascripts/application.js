@@ -57,12 +57,11 @@ $( document ).ready(function(){
           let $targetSquare = $(`.square[data-position="${newSquareNumber}"]`);
           $targetSquare.text(gameState['computer_marker']);
           isHumanTurn = true;
+          if (gameState['status'] == 'end_after') {
+            window.location.replace('/game/over');
+          }
         },
         thinkTime);
-
-      if (gameState['status'] == 'end_after') {
-        window.location.replace('/game/over');
-      }
     });
   });
 });
