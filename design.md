@@ -94,9 +94,63 @@ E.g., the session hash might look something like:
     ...
 }
 ```
+## Bonus feature: async requests and partial redraws ##
 
+Now I have built the basic game functionality, there is one glaring UX
+problem. Every time the player chooses, the response contains both the
+player's marker and the computer's next move. This makes the game feel
+very different to playing an actual opponent.
+
+Essentially, I would like the following:
+* When the user clicks a square, the human marker appears immediately
+* There is a pause, and then the computer marker for the computer opponent's
+next move appears.
+
+The first part *could* be achieved through a bit of JavaScript to replace the
+`&nbsp;` in the empty square with her marker while the request is made
+asynchronously which...
+
+If we break it down, the request in the existing system
+* updates the board state
+* if the board has reached an end state
+    * redirects to end state route
+* else
+    * updates the board with computer move
+    * if the board has reached an end state
+        * redirects to end state route
+    * else
+        * assembles entire html page as response that results in full-page redraw
+
+What we might do is
+* user clicks on a square
+* a JavaScript listener calls a function that 
+    * replaces the `nbsp;` in the square with the human player's marker
+    * sends a request to a route that
+        * updates the board state
+
+I think what confuses me is how much we should
+be doing with JavaScript/jQuery. Say our JavaScript updates the board visually
+and then sends an asynch request. What happens when there is an end state?
+Also, how do we handle the computer move?
+On one hand, there will be a slight delay between updating the DOM with the
+player marker and the async response coming back, but this length of time
+might be imperceptible. So, I imagine we'd need to do something like:
+```
+updateDOM(square, marker)
+let t = (new Date()).getTime();
+sendAsyncRequest(square, t, function foo(t))
+
+function foo(t)
+if ((new Date()).getTime() - t < a certain number of milliseconds) {
+    wait for the difference of milliseconds
+}
+now draw the computer move in
+```
+The problem with this might be synchronous waiting.
 
 Bonus Features:
+* player chooses from three different opponents, easy medium hard
+* player chooses whether she goes first or second
 * player logins with passwords
 * players scoreboard
 * asynch requests and partial redraws
