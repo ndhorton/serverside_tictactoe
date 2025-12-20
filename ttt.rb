@@ -45,6 +45,10 @@ helpers do
 end
 
 get '/' do
+  redirect '/game'
+end
+
+get '/game' do
   @game_state = TTTGame.new_game('X', :human, 'Sonny')
   session[:game_state] = @game_state
   erb :game
