@@ -43,6 +43,7 @@ $( document ).ready(function(){
       if (gameState['status'] == 'end') {
         // if the human move ended the game, immediate redirect
         window.location.replace('/game/over');
+        isHumanTurn = true;
         return;
       }
 
