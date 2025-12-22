@@ -8,6 +8,14 @@ require 'sinatra/reloader' if development?
 require 'tilt/erubi'
 require 'yaml'
 
+# TODO: write tests for existing funcitonality.
+
+# TODO: add user signin and password database
+# * add views for signup and signin
+# * modify existing views for signout
+# * add routes for signin, signout and signup
+# * add password YAML db
+
 require_relative 'lib/tttgame'
 
 configure do
@@ -26,7 +34,7 @@ get '/' do
 end
 
 get '/game' do
-  @game_state = TTTGame.new_game('X', :human, 'Sonny')
+  @game_state = TTTGame.new_game('X', :human, 'Hal')
   session[:game_state] = @game_state
   erb :game
 end

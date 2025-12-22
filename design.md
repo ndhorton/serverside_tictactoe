@@ -149,8 +149,7 @@ now draw the computer move in
 The problem with this might be synchronous waiting.
 
 Bonus Features:
+* player logins with passwords
 * player chooses from three different opponents, easy medium hard
 * player chooses whether she goes first or second
-* player logins with passwords
 * players scoreboard
-* asynch requests and partial redraws

@@ -1,11 +1,11 @@
 // handle asynchronous requests and partial redraws
 
-// TODO: we need to prevent a situation where the player clicks more than
-// one square without waiting for computer turn
-
 // TODO: we are eventually going to need to set the player marker dynamically
 // and we will need to do so both here and on the server. Same goes for the
-// starting player turn
+// starting player turn. I think if we have a class on the form that submits
+// the player choices, then we could listen for the form submission and
+// extract the player marker choice for client-side use. This would also
+// be were the starting turn (`isHumanTurn`s initial value for a game) is set.
 
 const delayTime = 800;
 
@@ -13,6 +13,7 @@ let isHumanTurn = true;
 let humanMarker = 'X';
 
 $( document ).ready(function(){
+
   $( '.square' ).click(function(event) {
     const $clickedSquare = $(this);
     if (!isHumanTurn || $clickedSquare.text().trim() !== '' ||
@@ -64,4 +65,5 @@ $( document ).ready(function(){
         thinkTime);
     });
   });
+
 });
