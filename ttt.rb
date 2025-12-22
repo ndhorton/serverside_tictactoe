@@ -30,7 +30,19 @@ helpers do
 end
 
 get '/' do
-  redirect '/game'
+  redirect '/home'
+end
+
+get '/home' do
+  erb :home
+end
+
+get '/signup' do
+  erb :signup
+end
+
+get '/signin' do
+  erb :signin
 end
 
 get '/game' do
