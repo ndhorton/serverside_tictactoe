@@ -1,4 +1,8 @@
 <%= yield %>
 <% content_for :who_won do %>
-  <h2>It's a tie!</h2>
+  <h2 class="win-or-tie">It's a tie!</h2>
+  <ul>
+    <li><a href="/game">New Game</a></li>
+    <li><a href="/users/signout">Sign Out</a></li>
+  </ul>
 <% end %>

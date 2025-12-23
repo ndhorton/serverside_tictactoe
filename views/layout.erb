@@ -10,6 +10,9 @@
   </head>
   <body>
     <h1>Tic Tac Toe</h1>
+    <% if session[:message] %>
+      <h2 class="message"><%= session.delete(:message) %></h2>
+    <% end %>
     <%= yield %>
     <%= yield_content :who_won %>
   </body>

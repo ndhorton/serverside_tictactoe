@@ -1,2 +1,17 @@
 <h3>Sign Up</h3>
-<form></form>
+<h4>Please choose a username and password</h4>
+<form action="/users/signup" method="post">
+  <fieldset>
+    <div class="input-wrapper">
+      <label for="username">Username:</label>
+      <input id="username" name="username" type="text"
+            spellcheck="false" autocomplete="true"
+            value="<%= @previous_username %>">
+    </div>
+    <div class="input-wrapper">
+      <label for="password">Password:</label>
+      <input id="password" name="password" type="password">
+    </div>
+    <button type="submit">Create Account</button>
+  </fieldset>
+</form>
