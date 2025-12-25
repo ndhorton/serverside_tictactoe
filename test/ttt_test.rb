@@ -109,11 +109,60 @@ class TicTacToeTest < Minitest::Test
     assert_includes last_response.body, '<div data-position'
   end
 
+  def test_game_first_move
+    post '/game/5', {}, { 'rack.session' => {
+      username: 'admin',
+      game_state: {
+        opponent: 'Hal',
+        human_marker: 'X',
+        computer_marker: 'O',
+        active_turn: :human,
+        board_state: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+      }
+    } }
+    assert_equal 200, last_response.status
+    assert_includes last_response['Content-Type'], 'json'
+    assert_includes last_response.body, '"status":"continue"'
+  end
+
+  def test_game_human_winning_move
+    post '/game/7', {}, { 'rack.session' => {
+      username: 'admin',
+      game_state: {
+        opponent: 'Hal',
+        human_marker: 'X',
+        computer_marker: 'O',
+        active_turn: :human,
+        board_state: ['X', 'O', 'X', ' ', 'X', ' ', ' ', ' ', 'O']
+      }
+    } }
+    assert_equal 200, last_response.status
+    assert_includes last_response['Content-Type'], 'json'
+    assert_includes last_response.body, '"status":"end"'
+  end
+
+  def test_game_computer_winning_move
+    post '/game/6', {}, { 'rack.session' => {
+      username: 'admin',
+      game_state: {
+        opponent: 'Hal',
+        human_marker: 'X',
+        computer_marker: 'O',
+        active_turn: :human,
+        board_state: ['X', 'X', 'O', ' ', 'O', ' ', ' ', ' ', ' ']
+      }
+    } }
+    assert_equal 200, last_response.status
+    assert_includes last_response['Content-Type'], 'json'
+    assert_includes last_response.body, '"status":"end_after"'
+  end
+
   def test_game_over_page_tie
     get '/game/over', {}, { 'rack.session' => {
       username: 'admin',
       game_state: {
         human_marker: 'X',
+        computer_marker: 'O',
         active_turn: :human,
         board_state: %w[O X X X X O O O X]
       }
@@ -132,6 +181,7 @@ class TicTacToeTest < Minitest::Test
       username: 'admin',
       game_state: {
         human_marker: 'X',
+        computer_marker: 'O',
         active_turn: :human,
         board_state: ['X', 'O', 'X', ' ', 'X', ' ', 'X', ' ', 'O']
       }
@@ -148,6 +198,7 @@ class TicTacToeTest < Minitest::Test
       username: 'admin',
       game_state: {
         human_marker: 'X',
+        computer_marker: 'O',
         active_turn: :human,
         board_state: ['O', 'X', 'O', ' ', 'O', ' ', 'O', ' ', 'X']
       }
