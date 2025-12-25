@@ -10,9 +10,6 @@ require 'yaml'
 
 # TODO: write tests for existing functionality.
 
-# TODO: add user signin and password database
-# * modify existing views for signout and new game
-
 require_relative 'lib/tttgame'
 
 def credentials_pathname
