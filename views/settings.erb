@@ -1,0 +1,24 @@
+<h3>Settings</h3>
+<h4>Please choose an opponent and who should start</h4>
+<form class="user-settings" action="/game/settings" method="post">
+  <fieldset>
+    <div class="input-wrapper">
+      <label for="opponent">Select an opponent:</label>
+      <select name="opponent" id="opponent">
+        <option value="" disabled>--Please choose--</option>
+        <option value="R2D2" required>R2D2 (easy)</option>
+        <option value="Sonny" required>Sonny (medium)</option>
+        <option value="Hal" required>Hal (hard)</option>
+      </select>
+    </div>
+    <div class="input-wrapper">
+      <label for="first-turn">Choose who should start:</label>
+      <select name="first_turn" id="first-turn">
+        <option value="" disabled>--Please choose--</option>
+        <option value="human" required>You start</option>
+        <option value="computer" required>Your opponent starts</option>
+      </select>
+    </div>
+    <button type="submit">Start Game</button>
+  </fieldset>
+</form>

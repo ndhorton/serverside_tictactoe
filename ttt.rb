@@ -8,7 +8,8 @@ require 'sinatra/reloader' if development?
 require 'tilt/erubi'
 require 'yaml'
 
-# TODO: write tests for existing functionality.
+# TODO: give player choice of opponent and starting turn
+# * create event listener JS callback to set globals on form submission
 
 require_relative 'lib/tttgame'
 
@@ -140,11 +141,37 @@ get '/users/signout' do
   redirect '/'
 end
 
+get '/game/settings' do
+  require_user_signin
+
+  erb :settings
+end
+
+post '/game/settings' do
+  require_user_signin
+
+  first_turn = params[:first_turn].strip.to_sym
+  opponent = params[:opponent].strip
+
+  human_marker = (first_turn == :human ? 'X' : 'O')
+  game_state = TTTGame.new_game(human_marker, first_turn, opponent)
+  if first_turn == :computer
+    computer_marker = (human_marker == 'X' ? 'O' : 'X')
+    board = TTTGame.deserialize_board(game_state)
+    computer_opponent = TTTGame.deserialize_opponent(game_state)
+    computer_move = computer_opponent.choose(board)
+    board[computer_move] = computer_marker
+    game_state[:board_state] = board.dump_board_state
+  end
+  session[:game_state] = game_state
+  redirect '/game'
+end
+
 get '/game' do
   require_user_signin
 
-  @game_state = TTTGame.new_game('X', :human, 'Hal')
-  session[:game_state] = @game_state
+  @game_state = session[:game_state]
+
   erb :game
 end
 

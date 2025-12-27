@@ -148,8 +148,24 @@ now draw the computer move in
 ```
 The problem with this might be synchronous waiting.
 
+Now we need to add a settings page to control
+* difficulty (which AI opponent)
+* who goes first
+
+I think this should be where we link to from New Game hyperlinks and would have the
+route `GET /game/new` for the form and then `POST /game/new` for executing
+the settings.
+
+This will require rewriting the existing game routes and also the JavaScript
+code, since we will need to set the initial `isHumanTurn` and, as a consequence,
+which marker is the human marker. This would be a new separate listener for a form
+submission for a form with a `#user-settings` class. This listener's callback would stop
+propagation, then set the appropriate global vars, and then submit the form. We
+really just need to intercept the form submission, set a couple of globals and then
+continue as normal.
+
 Bonus Features:
-* player logins with passwords
+X player logins with passwords
 * player chooses from three different opponents, easy medium hard
 * player chooses whether she goes first or second
 * players scoreboard

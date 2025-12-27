@@ -8,11 +8,25 @@
 // be were the starting turn (`isHumanTurn`s initial value for a game) is set.
 
 const delayTime = 800;
-
 let isHumanTurn = true;
-let humanMarker = 'X';
+
+// let humanMarker = 'P';
 
 $( document ).ready(function(){
+
+//  $('form.user-settings').submit(function(event) {
+//    const formDataString = $(this).serialize();
+//    let parameters = formDataString.split('&');
+//    let firstTurn = parameters.find(function(parameter) {
+//      parameter[0] === 'first_turn';
+//    });
+//    let firstTurnValue = firstTurn.split('=')[0];
+//    if (firstTurnValue === 'human') {
+//      humanMarker = 'X';
+//    } else {
+//      humanMarker = 'O';
+//    }
+//  });
 
   $( '.square' ).click(function(event) {
     const $clickedSquare = $(this);
@@ -21,6 +35,7 @@ $( document ).ready(function(){
       return;
     }
     isHumanTurn = false;
+    let humanMarker = $('table').data('human-marker');
 
     // insert player marker in DOM
     $clickedSquare.text(humanMarker);
@@ -29,7 +44,7 @@ $( document ).ready(function(){
     // moved
 
     // send async request to handle move server-side
-    let squareNumber = $clickedSquare.data("position");
+    let squareNumber = $clickedSquare.data('position');
     let t = (new Date()).getTime();
     let request = $.ajax({
       url: `/game/${squareNumber}`,
