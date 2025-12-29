@@ -164,8 +164,31 @@ propagation, then set the appropriate global vars, and then submit the form. We
 really just need to intercept the form submission, set a couple of globals and then
 continue as normal.
 
+Coming to the scoreboard, we need to keep track of each win in a simple
+text file datastore. We could use YAML, since we are using it for the users data.
+
+The YAML object would look like:
+{
+    'R2D2' => 2,
+    'Sonny' => 4,
+    'Hal' => 9,
+    'admin' => 12
+}
+in Ruby.
+
+and so on. In the `/game/over` route, we need to:
+* read the YAML into `players` variable
+* if human won
+    * if `players[username]` exists
+        * increment `players[username]`
+    * else
+        * set `players[username]` = 1
+* if computer won
+  same thing but with computer opponent's name
+
+
 Bonus Features:
 X player logins with passwords
-* player chooses from three different opponents, easy medium hard
-* player chooses whether she goes first or second
+X player chooses from three different opponents, easy medium hard
+X player chooses whether she goes first or second
 * players scoreboard

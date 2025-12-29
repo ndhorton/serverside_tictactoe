@@ -1,15 +1,3 @@
-<!--
-  We need to have this page offer
-  * signin
-  * signup
-  If we are signed in, we only see options to
-  * start a new game
-  * signout
-  We will eventually see the option to
-  * View league table, which should be visible whether or not we are signed in
-
-  Which should be visible
--->
 <% if session[:username] %>
   <h2>Hi there, <%= session[:username] %>! Welcome to Tic Tac Toe!</h2>
 <% else %>
@@ -19,10 +7,12 @@
   <ul>
     <li><a href="/game/settings">New Game</a></li>
     <li><a href="/users/signout">Sign Out</a></li>
+    <li><a href="/users/scoreboard">View Scoreboard</a></li>
   </ul>
 <% else %>
   <ul>
     <li><a href="/users/signin">Sign In</a></li>
     <li><a href="/users/signup">Sign Up</a></li>
+    <li><a href="/users/scoreboard">View Scoreboard</a></li>
   </ul>
 <% end %>

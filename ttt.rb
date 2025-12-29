@@ -8,8 +8,17 @@ require 'sinatra/reloader' if development?
 require 'tilt/erubi'
 require 'yaml'
 
-# TODO: give player choice of opponent and starting turn
-# * create event listener JS callback to set globals on form submission
+# TODO: create a scoreboard of games won by each player
+# X create a view for the scoreboard
+# X create a route for `GET /users/scoreboard`
+#   X we need to check if a database exists
+#     * if so, we load the YAML into a hash called user_scores
+#     * if not, we set user_scores to an empty hash
+#   X if player won, we do something like
+#     `user_scores[username] = (user_scores[username] || 0) + 1`
+#   X if computer won, we do something like
+#     `user_scores[game_state[:opponent]] = ` etc...
+# * edit the `/game/over` route to add/upate user_scores db
 
 require_relative 'lib/tttgame'
 
@@ -40,6 +49,10 @@ def load_user_credentials
   File.exist?(credentials_pathname) ? YAML.load_file(credentials_pathname) : {}
 end
 
+def load_user_scores
+  File.exist?(user_scores_pathname) ? YAML.load_file(user_scores_pathname) : {}
+end
+
 def require_user_signin
   return if user_signed_in?
 
@@ -49,6 +62,22 @@ end
 
 def save_user_credentials(credentials)
   File.write(credentials_pathname, YAML.dump(credentials))
+end
+
+def save_user_scores(user_scores)
+  File.write(user_scores_pathname, YAML.dump(user_scores))
+end
+
+def user_scores_pathname
+  if ENV['RACK_ENV'] == 'test'
+    # rubocop:disable Style/ExpandPathArguments
+    File.expand_path('../test/scoreboard.yaml', __FILE__)
+    # rubocop:enable Style/ExpandPathArguments
+  else
+    # rubocop:disable Style/ExpandPathArguments
+    File.expand_path('../scoreboard.yaml', __FILE__)
+    # rubocop:enable Style/ExpandPathArguments
+  end
 end
 
 def user_exists?(username)
@@ -76,6 +105,8 @@ get '/' do
 end
 
 get '/home' do
+  @user_scores = load_user_scores
+
   erb :home
 end
 
@@ -141,6 +172,12 @@ get '/users/signout' do
   redirect '/'
 end
 
+get '/users/scoreboard' do
+  @user_scores = load_user_scores
+
+  erb :scoreboard
+end
+
 get '/game/settings' do
   require_user_signin
 
@@ -175,19 +212,28 @@ get '/game' do
   erb :game
 end
 
+# this needs to be modified for the logic that updates the scoreboard datastore
 get '/game/over' do
   require_user_signin
 
   @game_state = session[:game_state]
   redirect '/' if @game_state.nil?
   board = TTTGame.deserialize_board(@game_state)
+  user_scores = load_user_scores
+
   if board.human_won?
+    username = session[:username]
+    user_scores[username] = (user_scores[username] || 0) + 1
+    save_user_scores(user_scores)
     erb :layout, layout: false do
       erb :human_won do
         erb :end_state
       end
     end
   elsif board.computer_won?
+    opponent = @game_state[:opponent]
+    user_scores[opponent] = (user_scores[opponent] || 0) + 1
+    save_user_scores(user_scores)
     erb :layout, layout: false do
       erb :computer_won do
         erb :end_state

@@ -1,0 +1,19 @@
+<h3>Scoreboard</h3>
+<% if @user_scores.empty? %>
+  <h4>The scoreboard is currently empty!</h4>
+<% else %>
+  <table class="scoreboard">
+    <tr>
+      <th>Player</th>
+      <th>Games won</th>
+    </tr>
+    <tbody>
+      <% @user_scores.each_pair do |username, score| %>
+        <tr>
+          <th><%= username %></th>
+          <td><%= score %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

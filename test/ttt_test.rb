@@ -101,8 +101,16 @@ class TicTacToeTest < Minitest::Test
   end
 
   def test_game_page
-    get '/game', {}, admin_session
-
+    get '/game', {}, { 'rack.session' => {
+      username: 'admin',
+      game_state: {
+        opponent: 'Hal',
+        human_marker: 'X',
+        computer_marker: 'O',
+        active_turn: :human,
+        board_state: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+      }
+    } }
     assert_equal 200, last_response.status
     refute_nil session[:game_state]
     assert_includes last_response.body, '<table'
