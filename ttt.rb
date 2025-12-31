@@ -8,17 +8,8 @@ require 'sinatra/reloader' if development?
 require 'tilt/erubi'
 require 'yaml'
 
-# TODO: create a scoreboard of games won by each player
-# X create a view for the scoreboard
-# X create a route for `GET /users/scoreboard`
-#   X we need to check if a database exists
-#     * if so, we load the YAML into a hash called user_scores
-#     * if not, we set user_scores to an empty hash
-#   X if player won, we do something like
-#     `user_scores[username] = (user_scores[username] || 0) + 1`
-#   X if computer won, we do something like
-#     `user_scores[game_state[:opponent]] = ` etc...
-# * edit the `/game/over` route to add/upate user_scores db
+# TODO: style settings form and selects (optional)
+# TODO: style scoreboard (less optional, it looks dire)
 
 require_relative 'lib/tttgame'
 
