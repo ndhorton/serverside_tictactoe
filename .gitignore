@@ -1,2 +1,4 @@
 .ruby-lsp
+users.yaml
+scoreboard.yaml
 Gemfile.lock
