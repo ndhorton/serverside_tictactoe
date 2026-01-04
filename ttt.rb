@@ -9,7 +9,7 @@ require 'tilt/erubi'
 require 'yaml'
 
 # TODO: style settings form and selects (optional)
-# TODO: style scoreboard (less optional, it looks dire)
+# TODO: style scoreboard (optional)
 
 require_relative 'lib/tttgame'
 

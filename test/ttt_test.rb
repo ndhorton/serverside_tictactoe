@@ -218,4 +218,40 @@ class TicTacToeTest < Minitest::Test
     refute_includes last_response.body, 'You'
     assert_includes last_response.body, 'won!'
   end
+
+  def test_game_settings_page
+    get '/game/settings', {}, admin_session
+
+    assert_equal 200, last_response.status
+    assert_includes last_response.body, '<h3>Settings</h3>'
+    assert_includes last_response.body, '<form'
+    assert_includes last_response.body, '<select'
+  end
+
+  def test_game_settings_page_without_signin
+    get '/game/settings'
+
+    assert_equal 302, last_response.status
+  end
+
+  def test_game_settings_handling
+    post '/game/settings', { first_turn: 'human', opponent: 'Hal' }, admin_session
+
+    assert_equal 302, last_response.status
+    assert_includes last_response['Location'], '/game'
+  end
+
+  def test_game_settings_handling_without_signin
+    post '/game/settings', { first_turn: 'human', opponent: 'Hal' }
+
+    assert_equal 302, last_response.status
+    refute_includes last_response['Location'], '/game'
+  end
+
+  def test_scoreboard_page
+    get '/users/scoreboard'
+
+    assert_equal 200, last_response.status
+    assert_includes last_response.body, '<h3>Scoreboard</h3>'
+  end
 end
