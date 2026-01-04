@@ -8,9 +8,6 @@ require 'sinatra/reloader' if development?
 require 'tilt/erubi'
 require 'yaml'
 
-# TODO: style settings form and selects (optional)
-# TODO: style scoreboard (optional)
-
 require_relative 'lib/tttgame'
 
 def credentials_pathname

@@ -50,14 +50,14 @@ input[type="password"] {
     padding: 4px;
 }
 
-table {
+.ttt-board {
     table-layout: fixed;
     width: 50%;
     margin: 2.5rem auto;
     border-collapse: collapse;
 }
 
-td {
+.ttt-board td {
     width: 2.5rem;
     height: 2.5rem;
     text-align: center;
@@ -93,4 +93,22 @@ div.square:hover {
 .win-or-tie {
     width: 100%;
     text-align: center;
+}
+
+.scoreboard {
+    border-collapse: collapse;
+}
+
+.scoreboard th,
+.scoreboard td {
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+.scoreboard th[scope="col"] {
+    color: blueviolet;
+}
+
+.scoreboard th[scope="row"] {
+    color: dodgerblue;
 }
